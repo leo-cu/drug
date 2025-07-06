@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>医院药品管理系统</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.6/css/layui.css" media="all">
+</head>
+<body>
+ <!--  <div class="login-main">
+       <header class="layui-elip">登录</header>
+       <form class="layui-form">
+           <div>
+               <input type="text" name="usernamr" required lay-verify="required" placeholder="用户名" class="layui-input">
+           </div>
+           <div>
+               <input type="password" name="password" required lay-verify="required" placeholder="密码" class="layui-input">
+           </div>
+           <div class="layui-input-inline-btn">
+               <button   lay-submit lay-filter="login"  class="button">登录</button>
+           </div>
+
+       </form>
+   </div>-->
+ <div style="margin: 150px auto; width: 300px;">
+     <form class="layui-form" action="/toLogin" method="post">
+         <div class="layui-form-item">
+             <label class="layui-form-label">用户名</label>
+             <div class="layui-input-block">
+                 <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">密码</label>
+             <div class="layui-input-block">
+                 <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <div class="layui-input-block">
+                 <button class="layui-btn" lay-submit lay-filter="loginForm">登录</button>
+             </div>
+         </div>
+     </form>
+ </div>
+<script src="https://cdn.staticfile.org/layui/2.5.6/layui.js"></script>
+<script>
+   /* layui.use("from",function (){
+        var from= layui.form;
+        var $=layui.$;
+        //监听提交
+        form.on("submit(login)",function (data) {
+            debugger
+            $.ajax({
+                url:"/toLogin",
+                type:"POST",
+                data:data.field,
+                dataType:"json",
+                success:function (result){
+                    if (result.code=="1"){
+                        layui.msg(result.msg,{icon:result.icon,anim:result.anim},function (){
+                            location.href="/index";
+                        });
+                    }else {
+                        layui.msg(result.msg,{icon:result.icon,anim:result.anim})
+                    }
+                }
+            });
+            return false;
+        });
+    });*/
+   layui.use(['form'], function(){
+       var form = layui.form;
+       // 监听提交
+       form.on('submit(loginForm)', function(data){
+           // 这里可以添加一些预处理逻辑，比如禁用按钮，显示加载状态等
+           // data.field 获取到所有表单字段的值，例如：{username: 'xxx', password: 'xxx'}
+           console.log(data.field); // 打印提交的字段值，用于调试
+           // 实际项目中，这里应该使用 AJAX 提交表单数据到后端处理
+           debugger
+           $.ajax({
+               type: "POST",
+               url:"/toLogin",// 提交到后端的 URL，应与 form 的 action 一致或根据实际情况调整
+               data: data.field, // 序列化表单值，也可以通过其他方式如 JSON.stringify(data.field) 发送 JSON 数据
+               dataType:"json",
+               success: function(response){
+                   // 处理后端返回的结果，例如：登录成功或失败等
+                   if(response.code=="1"){
+                       // 登录成功后的操作，例如跳转页面或显示成功消息
+                       window.location.href = '/index'; // 假设登录成功后跳转到首页
+                   } else {
+                       layer.msg(response.message); // 使用 layui 的 layer 弹出错误消息
+                   }
+               },
+               error: function(){
+                   layer.msg('登录请求失败，请重试'); // 网络错误或服务器错误提示
+               }
+           });
+           return false; // 阻止表单跳转
+       });
+   });
+
+</script>
+</script>
+</body>
+</html>
