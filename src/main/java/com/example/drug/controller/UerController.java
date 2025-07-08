@@ -1,5 +1,6 @@
 package com.example.drug.controller;
 
+
 import com.example.drug.common.ResultMapUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -22,7 +23,7 @@ public class UerController {
     @RequestMapping(value = "/toLogin")
     @ResponseBody
     public  Object toLogin(String username,String password){
-      if (username==null||password==null){
+        if (username==null||password==null){
           return ResultMapUtil.getHasMapLogin("用户名密码不能为空","2");
       }
         Subject subject=SecurityUtils.getSubject();
@@ -44,5 +45,15 @@ public class UerController {
     @RequestMapping(value = "/index")
     public String index(){
         return "/index";
+    }
+    /**
+     * 转向后台管理首页
+     * @return
+     */
+    @RequestMapping(value = "/logout")
+    public String logout(){
+        Subject subject= SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect/login";
     }
 }

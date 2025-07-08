@@ -5,14 +5,101 @@
     <title>医院药品管理系统</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.6/css/layui.css" media="all">
 </head>
-<body>
-   <div class="login-main">
-       <header class="layui-elip">后台首页</header>
+<body class="layui-layout-boby">
 
-   </div>
+       <!--顶部-->
+       <div class="layui-layout layui-layout-admin">
+           <div class="layui-header">
+              <div class="layui-logo">医药药品管理系统</div>
+               <ul class="layui-nav layui-layout-right">
+                   <li class="layui-nav layui-layout-right" >
+                       <a href="/logout" class="layui-nav-item">退出系统</a>
+                   </li>
+               </ul>
+             </div>
+           <!--左侧菜单-->
+           <div class="layui-side layui-bg-black">
+               <div class="layui-side-scroll">
+                  <ul class="layui-nav layui-nav-tree" lay-accordion="true">
+                      <li class="layui-nav-item">
+                          <a href="javascript:;" class="layui-nav-item">药品库存管理</a>
+                      </li>
+                       <li class="layui-nav-item">
+                           <a href="javascript:;" class="layui-nav-item">药品销售管理</a>
+                       </li>
+                       <li class="layui-nav-item">
+                           <a href="javascript:;" class="layui-nav-item">药品明细管理</a>
+                           <dl class="layui-nav-child">
+                               <dd><a href="#" class="site-dome-active" lay-href="http://www.baidu.com/" data-id="1" data-title="药品信息">药品信息</a></dd>
+                               <dd><a href="#" class="site-dome-active" lay-href="/supplier" data-id="2" data-title="供应商信息">供应商信息</a></dd>
+                           </dl>
+                       </li>
+                   </ul>
+               </div>
+
+           </div>
+           <!--主体部分-->
+           <div class="layui-boby">
+               <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="margin:0;">
+                   <ul class="laui-tab-title"></ul>
+                   <div class="layui-tab-content"></div>
+               </div>
+           </div>
+           <!--底部区域-->
+           <div class="layui-footer">
+               医院药品管理--底部固定区域
+           </div>
+       </div>
+
 <script src="https://cdn.staticfile.org/layui/2.5.6/layui.js"></script>
-<script>
 
+<script>
+    layui.use(['element','layer','jquery'], function(){
+        var element=layui.element;
+        var $=layui.$;
+        //左侧菜单树叶点击事件
+        $('.site-demo-active').on('click',function(){
+            var dataid=$(this);
+            //判断右侧是否有tab
+            if($(".layui-tab-title li[lay-id]").length<=0){
+               //没有tab，直接打开信贷tab
+               active.tabAdd(dataid.attr('lay-href'),dataid.attr('data-id'),dataid.attr('data-title'));
+            }else{
+                //判断该tab项是否已经存在
+                var isExist = false;
+                $.each($(".layui-tab-title li[lay-id]"),function(){
+                   //如果点击左侧菜单栏传入到ID在右侧致公党lay-ID 可以找到，说明该tab项已打开
+                   if($(this).attr("lay-id")==dataid.attr("data-id")){
+                      isExist=true;
+                   }
+                });
+                if(isExist == false){
+                    //不存在当前id对应到tab，直接打开新到tab
+                    active.tabAdd(dataid.attr('lay-href'),dataid.attr('data-id'),dataid.attr('data-title'));
+                }
+            }
+        });
+        //配置active 绑定几项事件后面可以用active 调用这些事件
+        var active={
+            //新增tab项
+            //url是页面地址，id对应data-id，name对应标题
+            tabAdd:function(url,id,name){
+                element.tabAdd('demo',{
+                    title:name,
+                    content:\'<iframe data-frameid="\'+id+\'" scrolling="auto" frameborder="0" src="'+url+'" style="width=100%;height=700px;"></iframe>>',
+                    id:id
+                });
+            },
+            //根据id切换到指定到tab
+            tabChange:function(id){
+                element.tabChange("demo",id);
+            },
+            //关闭指定到tab
+            tabDelete:function(id){
+                element.tabDelete("demo",id);
+            }
+        }
+    });
 </script>
 </body>
 </html>
