@@ -56,4 +56,6 @@ public class UerController {
         subject.logout();
         return "redirect/login";
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.drug.common;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import java.util.HashMap;
 
 /**
@@ -26,6 +28,29 @@ public class ResultMapUtil {
             resultMap.put("icon",3);
         }
         resultMap.put("icon",4);
+        return resultMap;
+    }
+    /**
+     * 分页查询结果
+     */
+    public static HashMap<String,Object> getHashMapMysqlPage(IPage<?> object){
+        HashMap<String,Object> resultMap= new HashMap<>();
+        resultMap.put("code",0);
+        resultMap.put("msg","");
+        resultMap.put("count",object.getTotal());
+        resultMap.put("data",object.getRecords());
+        return resultMap;
+    }
+
+    /**
+     * 异常数据统一处理
+     * @param e
+     * @return
+     */
+    public static HashMap<String,Object> getHashMapException(Exception e){
+        HashMap<String,Object> resultMap= new HashMap<>();
+        resultMap.put("code",0);
+        resultMap.put("msg",e.getMessage());
         return resultMap;
     }
 }

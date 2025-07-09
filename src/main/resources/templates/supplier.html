@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>医院药品管理系统</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/layui/2.5.6/css/layui.css" media="all">
+    <script type="text/html" id="indexTpl">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+</head>
+<body class="layui-layout-boby">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space5">
+        <div class="layui-card">
+            <div class="layui-card-header">供应商信息列表</div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="main-table" lay-filter="main-tabile"></table>
+                <script type="text/html" id="toolbarDemo">
+                    <span class="layui-inline" lay-event="add"><i class="layui-icon">&#xe654;</i></span>
+                    <span class="layui-inline" style="width: 240px;">
+                        <input class="layui-input" name="param" id="param" placeholder="根据药品名称查询" autocomplete="off">
+                    </span>
+                    <span class="layui-btn layui-btn-sm layui-bg-red" lay-event="querySearch">
+                        <i class="layui-icon">&#xe615;</i>查询
+                    </span>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.staticfile.org/layui/2.5.6/layui.js"></script>
+<script>
+    layui.use(['table','from'], function(){
+        var element=layui.element;
+        var $=layui.$;
+        var table=layui.table;
+        table.render({
+            elem:'main-table',
+            height:650,
+            url:'/supplier/supplierQueryPage',
+            method:'POST',
+            page:true,
+            id:'table-load',
+            toolbar:'#toolbarDemo',
+            cols:[
+                [
+                { title:'序号' ,templet:'indexTpl',width:60,align:'center'},
+                {fieId:'supplierName',title: '供应商名称',align: 'center',width: 250},
+                {fieId:'content',title: '描述',align: 'center',width: 250},
+                {fieId:'address',title: '供应商的地址',align: 'center',width: 250},
+                {fieId:'city',title: '城市',align: 'center',width: 250},
+                {fieId:'country',title: '国家',align: 'center',width: 250},
+                {fieId:'createtime',title: '创建时间',align: 'center',width: 250,
+                templet:"<div>{{layui.util.toDateString(d.createtime,'yyyy-MM-dd HH:mm:ss')}}</div>"},
+            ]
+            ]
+        });
+        //监听工具栏事件
+        table.on('toolbar(main-table)',function (obj){
+            switch (obj.event) {
+                case 'add':
+                    break;
+                case 'querySearch':
+                    var param=$('#param').val();
+                    table.reload("table-load",{
+                        where:{
+                            param:param
+                        }
+                    });
+                    $('#param').val(param);
+                    break;
+            }
+        })
+    });
+</script>
+</body>
+</html>
