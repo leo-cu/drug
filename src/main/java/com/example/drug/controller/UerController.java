@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UerController {
     @RequestMapping(value = "/login")
     public String login(){
-        return "/login";
+        return "index";
     }
     /**
      * 判断用户登录是否成功

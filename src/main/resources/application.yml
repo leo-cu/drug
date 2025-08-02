@@ -1,0 +1,40 @@
+server:
+  port: 80
+  # DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/drug?\useUnicode=true&charaaterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/cubc?useUnicode=true&characterEncoding=UTF-8
+    #url: jdbc:mysql://localhost:3306/cubc?serverTimezone=UTC
+    # THYMELEAF (ThymeleafAutoConfiguration)
+    username: root
+    password: root
+  sql:
+      init:
+        mode: always
+  mybatis-plus:
+    mapper-locations: classpath*:mapper/*.xml
+    type-aliases-package: com.example.drug.entity    # 扫描实体，这里是实体类存放的包名
+    configuration:
+      map-underscore-to-camel-case: true # 是否开启下划线和驼峰的映射，true表示开启
+    global-config:
+      db-config:
+        logic-delete-field: deleted # 全局逻辑删除字段名
+        logic-delete-value: 0 # 逻辑已删除值
+        logic-not-delete-value: 1 # 逻辑未删除值
+  mvc:
+      static-path-pattern: /static/**
+  thymeleaf:
+        cache: false
+        prefix: classpath:/templates/
+        suffix: .html
+        encoding: UTF-8
+        mode: HTML
+
+
+
+
+
+
+

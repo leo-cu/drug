@@ -3,8 +3,6 @@ package com.example.drug.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.drug.entity.Supplier;
-import com.example.drug.entity.User;
-
 import java.util.List;
 
 /**

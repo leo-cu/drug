@@ -16,7 +16,7 @@ import java.io.Serializable;
  * Date: 2025/7/8 23:20
  */
 @Data
-@TableName(value="Supplier")
+@TableName(value="supplier")
 public class Supplier implements Serializable {
     /**供应商的唯一标识符**/
     @TableField(value="supplierID")

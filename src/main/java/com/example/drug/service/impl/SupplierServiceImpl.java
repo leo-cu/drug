@@ -9,6 +9,7 @@ import com.example.drug.entity.Supplier;
 import com.example.drug.mapper.SupplierMapper;
 import com.example.drug.service.ISupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
  * name: SupplierServiceImpl
  * Date: 2025/7/9 20:45
  */
+@Component
 public class SupplierServiceImpl extends ServiceImpl<SupplierMapper,Supplier> implements ISupplierService {
      @Autowired
     private  SupplierMapper supplierMapper;
